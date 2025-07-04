@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Th�m {{ display_name }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Th�m {{ display_name }}</h1>
+</div>
+
+<form method="POST">
+    {% for column in columns %}
+        {% if column['Field'] != 'id' and column['Extra'] != 'auto_increment' %}
+        <div class="mb-3">
+            <label for="{{ column['Field'] }}" class="form-label">{{ column['Field'] }}</label>
+            
+            {% if column['Type'].startswith('enum') %}
+                {% set options = column['Type'][5:-1].replace("'", "").split(',') %}
+                <select class="form-select" id="{{ column['Field'] }}" name="{{ column['Field'] }}" 
+                    {% if column['Null'] == 'NO' %}required{% endif %}>
+                    <option value="">-- Ch?n --</option>
+                    {% for option in options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
+            {% elif column['Type'].startswith('date') %}
+                <input type="date" class="form-control" id="{{ column['Field'] }}" name="{{ column['Field'] }}"
+                    {% if column['Null'] == 'NO' %}required{% endif %}>
+            {% else %}
+                <input type="text" class="form-control" id="{{ column['Field'] }}" name="{{ column['Field'] }}" 
+                    {% if column['Null'] == 'NO' %}required{% endif %}>
+            {% endif %}
+            
+            {% if column['Type'].startswith('date') and column['Null'] == 'YES' %}
+                <div class="form-text">�? tr?ng n?u kh�ng c� th�ng tin</div>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endfor %}
+    
+    <button type="submit" class="btn btn-primary">L�u</button>
+    <a href="{{ url_for('view_table', table_name=table_name) }}" class="btn btn-secondary">H?y</a>
+</form>
+{% endblock %}

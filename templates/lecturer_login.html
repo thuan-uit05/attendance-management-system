@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block auth_content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">��ng nh?p</h3>
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">M? gi?ng vi�n</label>
+                            <input type="text" name="ma_giang_vien" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">M?t kh?u</label>
+                            <input type="password" name="mat_khau" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">��ng nh?p</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

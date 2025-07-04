@@ -1,0 +1,98 @@
+[file name]: class_detail.html
+[file content begin]
+{% extends "base.html" %}
+
+{% block title %}{{ class_info.Ten_mon_hoc }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ class_info.Ten_mon_hoc }}</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <a href="{{ url_for('manual_attendance') }}?ma_lop={{ class_info.Ma_lop }}" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-plus-circle"></i> �i?m danh th? c�ng
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- N?i dung chi ti?t l?p h?c -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Danh s�ch sinh vi�n</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>MSSV</th>
+                                <th>H? t�n</th>
+                                <th>Tr?ng th�i</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in registered_students %}
+                            <tr>
+                                <td>{{ student.MSSV }}</td>
+                                <td>{{ student.Ho_ten }}</td>
+                                <td>
+                                    {% if student.attendance_status %}
+                                        <span class="badge bg-success">�? �i?m danh</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">Ch�a �i?m danh</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>L?ch s? �i?m danh</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Th?i gian</th>
+                                <th>Sinh vi�n</th>
+                                <th>Tr?ng th�i</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attendance in attendance_list %}
+                            <tr>
+                                <td>{{ attendance.Thoi_gian_diem_danh.strftime('%d/%m/%Y %H:%M') }}</td>
+                                <td>{{ attendance.Ho_ten }} ({{ attendance.MSSV }})</td>
+                                <td>
+                                    {% if attendance.Trang_thai == 'C� m?t' %}
+                                        <span class="badge bg-success">{{ attendance.Trang_thai }}</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">{{ attendance.Trang_thai }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center">Ch�a c� l?ch s? �i?m danh</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+[file content end]

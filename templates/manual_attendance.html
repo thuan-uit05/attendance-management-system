@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Điểm danh thủ công{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Điểm danh thủ công</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="ma_lop" class="form-label">Lớp học</label>
+                        <select class="form-select" id="ma_lop" name="ma_lop" required>
+                            <option value="">-- Chọn lớp --</option>
+                            {% for class in classes %}
+                            <option value="{{ class['Ma_lop'] }}" 
+                                {% if request.args.get('ma_lop') == class['Ma_lop'] %}selected{% endif %}>
+                                {{ class['Ten_mon_hoc'] }} ({{ class['Ma_lop'] }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mssv" class="form-label">Mã số sinh viên</label>
+                        <input type="text" class="form-control" id="mssv" name="mssv" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Điểm danh</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

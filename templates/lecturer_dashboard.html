@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">L?p h?c h�m nay - {{ today }}</h1>
+</div>
+
+{% if classes %}
+<div class="row">
+    {% for class in classes %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5>{{ class.Ten_mon_hoc }}</h5>
+                <p class="text-muted">{{ class.Ma_lop }}</p>
+                <p>
+                    <i class="bi bi-clock"></i> {{ class.Thoi_gian_bat_dau.strftime('%H:%M') }} - 
+                    {{ class.Thoi_gian_ket_thuc.strftime('%H:%M') }}
+                </p>
+                <p><i class="bi bi-geo-alt"></i> {{ class.Phong_hoc }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">Kh�ng c� l?p h?c n�o h�m nay</div>
+{% endif %}
+{% endblock %}
